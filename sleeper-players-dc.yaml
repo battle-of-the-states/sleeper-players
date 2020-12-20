@@ -13,9 +13,11 @@ spec:
       labels:
         app: sleeper-players
     spec:
+      imagePullSecrets:
+      - name: pipeline-docker-registry
       containers:
       - name: sleeper-players
-        image: registry:5000/sleeper-players
+        image: ${CICD_IMAGE}:${CICD_EXECUTION_SEQUENCE}
         imagePullPolicy: Always
         env:
         - name: CONSUMER_KEY

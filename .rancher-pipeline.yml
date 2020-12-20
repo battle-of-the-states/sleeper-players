@@ -1,0 +1,13 @@
+stages:
+- name: Build & Publish
+  steps:
+  - publishImageConfig:
+      dockerfilePath: ./Dockerfile
+      buildContext: .
+      tag: bots-ffl-players:${CICD_EXECUTION_SEQUENCE}
+    env:
+      PLUGIN_MTU: 1450
+- name: Deploy
+  steps:
+  - applyYamlConfig:
+      path: ./sleeper-players-dc.yaml
