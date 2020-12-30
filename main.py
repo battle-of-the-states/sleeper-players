@@ -174,8 +174,6 @@ def trending():
 
 
 print(time.ctime())
-set_players()
-set_team_names()
 
 
 schedule.every().day.at("16:00").do(set_players)
