@@ -23,9 +23,11 @@ client = redis.Redis(host=os.getenv("REDIS_HOST"), port=6379, db=10,
 
 url = "https://api.sleeper.app/v1/players/nfl"
 
+
 def get_players():
     r = requests.get(url)
     return json.loads(r.content)
+
 
 '''
 For a faster runtime I should take the byte string from redis and turn it into a string locally
@@ -34,6 +36,8 @@ stringlist=[x.decode('utf-8') for x in bytelist]
 then instead of using the sismember we can use if key in stringlist:
 should make run time significantly faster..
 '''
+
+
 def set_players():
     # bytelist = client.smembers('active_players')
     # stringlist = [x.decode('utf-8') for x in bytelist]
@@ -81,7 +85,7 @@ def set_team_names():
     team_list = []
     bytelist = client.smembers('midwest_teams')
     mw = [x.decode('utf-8') for x in bytelist]
-    i =0
+    i = 0
     for team in mw:
         i += 1
         title = "mw_team_" + str(i)
@@ -176,7 +180,7 @@ set_team_names()
 
 schedule.every().day.at("16:00").do(set_players)
 schedule.every().day.at("18:15").do(set_team_names)
-schedule.every().friday.at("18:00").do(trending)
+# schedule.every().friday.at("18:00").do(trending)
 
 
 while True:
