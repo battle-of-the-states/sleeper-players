@@ -6,8 +6,22 @@ stages:
       buildContext: .
       tag: bots-ffl-players:${CICD_EXECUTION_SEQUENCE}
     env:
-      PLUGIN_MTU: 1450
+      PLUGIN_MTU: "1450"
+  when:
+    event:
+      include:
+      - push
+      - pull_request
 - name: Deploy
   steps:
   - applyYamlConfig:
       path: ./sleeper-players-dc.yaml
+  when:
+    event:
+      include:
+      - push
+      - pull_request
+branch:
+  include:
+  - main
+notification: {}
